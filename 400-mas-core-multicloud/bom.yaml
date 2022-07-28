@@ -1,0 +1,162 @@
+apiVersion: cloud.ibm.com/v1alpha1
+kind: BillOfMaterial
+metadata:
+  name: 400-mas-core-multicloud
+  labels:
+    type: software
+    code: '400'
+  annotations:
+    displayName: Maximo Application Suite Core
+    description: GitOps deployment of Maximo Application Suite Core for OpenShift
+spec:
+  modules:
+    - name: gitops-cp-bas
+      alias: bas
+      version: v1.0.1
+      dependencies:
+        - name: namespace
+          ref: bas-namespace
+      variables:
+        - name: db_archive_storage_class
+          alias: rwx_storage_class
+          scope: global
+        - name: postgres_storage_class
+          alias: rwo_storage_class
+          scope: global
+        - name: kafka_storage_class
+          alias: rwo_storage_class
+          scope: global
+        - name: zookeeper_storage_class
+          alias: rwo_storage_class
+          scope: global
+        - name: default_storage_class
+          alias: rwo_storage_class
+          scope: global
+    - name: gitops-cp-catalogs
+      alias: gitops-cp-catalogs
+      version: v1.2.1
+      variables:
+        - name: entitlement_key
+          scope: global
+    - name: gitops-cp-maximo
+      alias: gitops-cp-maximo
+      version: v1.0.5
+      variables:
+        - name: instanceid
+          ref: mas8
+        - name: cluster_ingress
+          scope: global
+        - name: entitlement_key
+          scope: global
+      dependencies:
+        - name: namespace
+          ref: maximo-namespace
+    - name: gitops-cp-sls
+      alias: sls
+      version: v2.2.1
+      dependencies:
+        - name: namespace
+          ref: sls-namespace
+      variables:
+        - name: cluster_ingress
+          scope: global
+        - name: entitlement_key
+          scope: global
+    - name: gitops-mongo-ce-operator
+      alias: gitops-mongo-ce-operator
+      version: v1.0.4
+      dependencies:
+        - name: namespace
+          ref: mongo-namespace
+      variables:
+        - name: mongo_storageclass
+          alias: rwo_storage_class
+          scope: global
+    - name: gitops-mongo-ce
+      alias: gitops-mongo-ce
+      version: v1.1.3
+      dependencies:
+        - name: namespace
+          ref: mongo-namespace
+      variables:
+        - name: storage_class_name
+          alias: rwo_storage_class
+          scope: global
+    - name: gitops-namespace
+      alias: sls-namespace
+      version: v1.11.1
+      variables:
+        - name: name
+          value: sls
+    - name: gitops-namespace
+      alias: mongo-namespace
+      version: v1.11.1
+      variables:
+        - name: name
+          value: mongo
+    - name: gitops-namespace
+      alias: bas-namespace
+      version: v1.11.1
+      variables:
+        - name: name
+          value: bas
+    - name: gitops-namespace
+      alias: maximo-namespace
+      version: v1.11.1
+      variables:
+        - name: name
+          value: maximo
+    - name: gitops-repo
+      alias: gitops_repo
+      version: v1.15.3
+    - name: util-clis
+      version: v1.9.5
+  variables:
+    - name: bas_dbpassword
+      type: string
+      description: The (mongodb) database password
+      sensitive: true
+    - name: bas_grafanapassword
+      type: string
+      description: The grafana password
+      sensitive: true
+    - name: rwo_storage_class
+      type: string
+      description: The default storage class for the resources
+    - name: rwx_storage_class
+      type: string
+      description: Storage class for the db_archive resource
+    - name: entitlement_key
+      type: string
+      description: >-
+        The entitlement key used to access the CP4I images in the container
+        registry. Visit https://myibm.ibm.com/products-services/containerlibrary
+        to get the key
+      sensitive: true
+    - name: cluster_ingress
+      type: string
+      description: Ingress for cluster
+    - name: gitops-cp-maximo_instanceid
+      type: string
+      description: 'instance name for MAS - for example: masdemo or mas8 '
+    - name: gitops_repo_host
+      type: string
+      description: The host for the git repository.
+    - name: gitops_repo_type
+      type: string
+      description: The type of the hosted git repository (github or gitlab).
+    - name: gitops_repo_org
+      type: string
+      description: The org/group where the git repository exists/will be provisioned.
+    - name: gitops_repo_repo
+      type: string
+      description: >-
+        The short name of the repository (i.e. the part after the org/group
+        name)
+    - name: gitops_repo_username
+      type: string
+      description: The username of the user with access to the repository
+    - name: gitops_repo_token
+      type: string
+      description: The personal access token used to access the repository
+      sensitive: true

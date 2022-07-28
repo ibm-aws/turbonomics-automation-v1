@@ -1,0 +1,17 @@
+## region: the value of region
+region="us-east-2"
+
+## access_key: the value of access_key
+##access_key=""
+
+## secret_key: the value of secret_key
+##secret_key=""
+
+## nat_gateway_connectivity_type: (Optional) Connectivity type for the gateway. Valid values are private and public. Defaults to public.
+nat_gateway_connectivity_type="public"
+
+## rosa-cluster_rosa_token: get an offline access token at https://cloud.redhat.com/openshift/token/rosa
+rosa-cluster_rosa_token="eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJhZDUyMjdhMy1iY2ZkLTRjZjAtYTdiNi0zOTk4MzVhMDg1NjYifQ.eyJpYXQiOjE2NTUxMDMyNTIsImp0aSI6IjRiNTRiYmM5LTdjYjAtNGExMC04ODVlLWIwMmRhZDNmMzlkYyIsImlzcyI6Imh0dHBzOi8vc3NvLnJlZGhhdC5jb20vYXV0aC9yZWFsbXMvcmVkaGF0LWV4dGVybmFsIiwiYXVkIjoiaHR0cHM6Ly9zc28ucmVkaGF0LmNvbS9hdXRoL3JlYWxtcy9yZWRoYXQtZXh0ZXJuYWwiLCJzdWIiOiJmOjUyOGQ3NmZmLWY3MDgtNDNlZC04Y2Q1LWZlMTZmNGZlMGNlNjpuaWtoaWwudGhha2thckBpYm0uY29tIiwidHlwIjoiT2ZmbGluZSIsImF6cCI6ImNsb3VkLXNlcnZpY2VzIiwibm9uY2UiOiI0MmNkOTY5ZS1mOWQ2LTRlZWYtOGE5Yy1jOWVjOTc1Mjg0MjkiLCJzZXNzaW9uX3N0YXRlIjoiN2U0MjE4MjQtYTY5Ny00YmU0LWJiOWMtZjk0NzZlOTE0ODQyIiwic2NvcGUiOiJvcGVuaWQgb2ZmbGluZV9hY2Nlc3MiLCJzaWQiOiI3ZTQyMTgyNC1hNjk3LTRiZTQtYmI5Yy1mOTQ3NmU5MTQ4NDIifQ.t_i9pqt3MFW7uWYONKtikwo0Mbhid1Lvtf5v86YFltA"
+
+## rosa-cluster_no_of_compute_nodes: Number of worker nodes to be provisioned
+rosa-cluster_no_of_compute_nodes="3"

@@ -1,0 +1,69 @@
+apiVersion: cloud.ibm.com/v1alpha1
+kind: BillOfMaterial
+metadata:
+  name: 105-aws-vpc-openshift
+  labels:
+    type: infrastructure
+    platform: aws
+    code: '105'
+  annotations:
+    displayName: AWS VPC OpenShift
+    description: AWS VPC and Red Hat OpenShift servers
+spec:
+  modules:
+    - name: aws-vpc
+      alias: aws-vpc
+      version: v1.3.0
+    - name: aws-internet-gateway
+      alias: internet_gateway
+      version: v1.2.0
+    - name: aws-vpc-subnets
+      alias: public_subnets
+      version: v2.1.2
+      dependencies:
+        - name: gateways
+          ref: internet_gateway
+    - name: aws-vpc-subnets
+      alias: private_subnets
+      version: v2.1.2
+      dependencies:
+        - name: gateways
+          ref: nat_gateway
+    - name: aws-nat-gateway
+      alias: nat_gateway
+      version: v1.1.0
+      dependencies:
+        - name: aws-vpc-subnets
+          ref: public_subnets
+    - name: aws-rosa
+      alias: rosa-cluster
+      version: v1.1.0
+      dependencies:
+        - name: public-subnets
+          ref: public_subnets
+        - name: private-subnets
+          ref: private_subnets
+  variables:
+    - name: region
+      type: string
+    - name: access_key
+      type: string
+    - name: secret_key
+      type: string
+    - name: nat_gateway_connectivity_type
+      type: string
+      description: >-
+        (Optional) Connectivity type for the gateway. Valid values are private
+        and public. Defaults to public.
+      defaultValue: '"public"  '
+    - name: rosa-cluster_rosa_token
+      type: string
+      description: >-
+        get an offline access token at
+        https://cloud.redhat.com/openshift/token/rosa 
+      defaultValue: ''
+      sensitive: true
+    - name: rosa-cluster_no_of_compute_nodes
+      type: number
+      description: Number of worker nodes to be provisioned
+      defaultValue: '2'
