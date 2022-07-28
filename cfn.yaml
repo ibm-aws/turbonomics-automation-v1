@@ -164,7 +164,7 @@ Resources:
           !Sub
           - |
             #!/bin/bash
-            github_url="https://github.ibm.com/ibm-aws/Turbonomics-automation.git"
+            github_url="https://github.com/ibm-aws/turbonomics-automation-v1"
             sudo yum install -y git
             sudo yum install -y yum-utils
             sudo yum-config-manager --add-repo https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo
